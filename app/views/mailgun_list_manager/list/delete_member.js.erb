@@ -1,0 +1,2 @@
+console.log("love rails [delete list]")
+$("#<%= @dom_id %>").html("<%= j (render 'members', members: get_members(@list_address), dom_id: @dom_id, list_address: @list_address) %>");

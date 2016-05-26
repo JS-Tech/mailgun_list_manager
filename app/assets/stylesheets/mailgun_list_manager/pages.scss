@@ -1,0 +1,88 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+.mailgun-list-manager.manager {
+  font-family: sans-serif;
+  font-size: 12px;
+  max-width: 900px;
+  margin: auto;
+
+  .add-list {
+    padding: 5px 10px;
+  }
+
+  .lists {
+    .list {
+      margin: 10px 0;
+      .title {
+        background: #efefef;
+        padding: 5px 10px;
+        cursor: pointer;
+        &:hover {
+          background: aliceblue;
+        }
+        .address {
+          font-weight: bold;
+        }
+      }
+      .container {
+        display: none;
+        border: 2px solid aliceblue;
+        border-radius: 0 0 10px 10px;
+        .form {
+          padding: 15px 10px;
+          background: aliceblue;
+          form.delete {
+            display: inline-block;
+          }
+          form.add {
+            padding: 5px 0 0 0;
+          }
+        }
+        table {
+          padding: 5px 10px;
+          width: 100%;
+          tbody {
+            tr {
+              &:hover {
+                background: aliceblue;
+              }
+            }
+          }
+        }
+      }
+      .update-modal {
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        z-index: 10;
+        background: rgba(0,0,0,.3);
+        display: none;
+        .content {
+          position: fixed;
+          top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          padding: 10px;
+          background: #fff;
+          .close {
+            cursor: pointer;
+            text-align: right;
+            padding: 10px;
+            &:hover {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .print-alone {
+    position: absolute;
+    top: 0; right: 0; left: 0;
+    background: #fff;
+    z-index: 999;
+    min-height: 100%;
+  }
+
+}

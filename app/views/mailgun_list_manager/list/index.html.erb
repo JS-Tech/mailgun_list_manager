@@ -1,0 +1,30 @@
+<div class="mailgun-list-manager manager">
+
+  <ul class="errors"></ul>
+
+  <h1>Listes de diffusion mail</h1>
+
+  <div class="add-list no-print">
+    <%= form_tag("list", remote: true) do %>
+      <label>Ajouter une liste</label>
+      <input type="email" required name="address" placeholder="*email">
+      <input type"text" required name="name" placeholder="*nom">
+      <select name="access_level" required placeholder="*niveau d'accès">
+        <option value="readonly">readonly</option>
+        <option value="members">members</option>
+        <option value="everyone">everyone</option>
+      </select>
+      <input type"text" name="description" placeholder="description">
+      <input type="submit" value="Ajouter">
+    <% end %>
+  </div>
+
+  <div id="lists-wrapper">
+    <%= render "lists" %>
+  </div>
+
+  <div id="overlay" data-loading>
+  	<p>Loading<br><br><%= image_tag "mailgun_list_manager/loader.svg" %></p>
+  </div>
+
+</div>

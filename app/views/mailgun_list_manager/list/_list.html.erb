@@ -1,0 +1,44 @@
+<div class="list">
+  <div class="title">
+    <span class="name"><%= @list["name"] %></span>
+    <span class="address"><%= @list["address"] %> (<%= @list["members_count"] %>)</span>
+  </div>
+
+  <div class="container">
+    <div class="form no-print">
+      <%= button_to "Supprimer la liste", { action: "delete", list_address: @list["address"] }, method: :delete, data: { confirm: "Are you sure?" }, remote: true, form_class: "delete" %>
+
+      <button onclick="$(this).next('.update-modal').show()">Mettre à jour les infos</button>
+      <div class="update-modal">
+        <div class="content">
+          <div class="close">X (fermer)</div>
+          <div class="title">Changer les infos</div>
+          <%= form_tag("list/#{@list["address"]}", method: :PUT, remote: true) do %>
+            <input type="email" required name="address" placeholder="*email" value="<%= @list["address"] %>">
+            <input type"text" required name="name" placeholder="*nom" value="<%= @list["name"] %>">
+            <select name="access_level" required placeholder="*niveau d'accès">
+              <option value="readonly" <%= "selected" if @list["access_level"] == "readonly" %> >readonly</option>
+              <option value="members" <%= "selected" if @list["access_level"] == "members" %> >members</option>
+              <option value="everyone" <%= "selected" if @list["access_level"] == "everyone" %> >everyone</option>
+            </select>
+            <input type"text" name="description" placeholder="description" value="<%= @list["description"] %>">
+            <input type="hidden" name="dom_id" value="<%= @i %>"
+            <input type="hidden" name="old_list_address" value="<%= @list["address"] %>">
+            <input type="submit" value="Mettre à jour">
+          <% end %>
+        </div>
+      </div>
+      <button onclick="printElement('#list-<%= @i %>')">Imprimer la liste</button>
+
+      <%= form_tag("list/members", remote: true, class: "add") do %>
+        <label>Ajouter un membre: </label>
+        <input type="email" required name="member_address" placeholder="email">
+        <input type="hidden" name="list_address" value="<%= @list["address"] %>">
+        <input type="hidden" name="dom_id" value="<%= "members-#{@i}" %>">
+        <input type="submit" value="Ajouter">
+      <% end %>
+    </div>
+      <%= content_tag :div, (render 'members', members: get_members(@list["address"]), dom_id: "members-#{@i}", list_address: @list["address"]), id: "members-#{@i}" %>
+  </div>
+
+</div>
