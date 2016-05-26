@@ -4,29 +4,24 @@ module MailgunListManager
   class ListController < ApplicationController
 
     def index
-      @lists = Mailgun().lists.list
+      @lists = List.all
     end
 
     def add
-      Mailgun().lists.create list_params[:address], list_params
-      @lists = Mailgun().lists.list
+      List.add(list_params[:address], list_params)
+      @lists = List.all
     end
 
     def delete
       Mailgun().lists.delete list_member_params["list_address"]
-      @lists = Mailgun().lists.list
+      @lists = List.all
     end
 
     def update
+      p params
       Mailgun().lists.update params[:old_list_address], list_params["address"], list_params
-      # @dom_id = params["dom_id"]
-      # p list_params
-      @list = Mailgun().lists.find(list_params["address"])["list"]
-      p @list
+      @list = List.find_by_address list_params["address"]
       @i = params["dom_id"]
-      p '#######################'
-      p 'update'
-      p '########################'
     end
 
     def add_member
@@ -47,7 +42,7 @@ module MailgunListManager
     private
 
     def list_params
-      params.permit(:description, :address, :name, :access_level)
+      params[:list].permit(:description, :address, :name, :access_level)
     end
 
     def list_member_params
