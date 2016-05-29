@@ -6,7 +6,7 @@
 
   <div class="container">
     <div class="form no-print">
-      <%= button_to "Supprimer la liste", { action: "delete", list_address: @list.address }, method: :delete, data: { confirm: "Are you sure?" }, remote: true, form_class: "delete" %>
+      <%= button_to "Supprimer la liste", { action: "delete", address: @list.address }, method: :delete, data: { confirm: "Are you sure?" }, remote: true, form_class: "delete" %>
 
       <button onclick="$(this).next('.update-modal').show()">Mettre à jour les infos</button>
       <div class="update-modal">
@@ -24,7 +24,7 @@
             <%= f.select(:access_level, List::ACCESS_LEVELS) %>
             <%= hidden_field_tag("old_address", @list.address) %>
             <%= hidden_field_tag("dom_id", @i) %>
-            <%= f.submit %>
+            <%= f.submit "Mettre à jour" %>
           <% end %>
         </div>
       </div>
@@ -38,7 +38,7 @@
         <input type="submit" value="Ajouter">
       <% end %>
     </div>
-      <%= content_tag :div, (render 'members', members: get_members(@list.address), dom_id: "members-#{@i}", list_address: @list.address), id: "members-#{@i}" %>
+      <%= content_tag :div, (render 'members', dom_id: "members-#{@i}"), id: "members-#{@i}" %>
   </div>
 
 </div>

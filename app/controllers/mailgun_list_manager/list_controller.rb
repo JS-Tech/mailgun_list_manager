@@ -5,6 +5,7 @@ module MailgunListManager
 
     def index
       @lists = List.all
+      p @lists.first.members
     end
 
     def add
@@ -13,27 +14,26 @@ module MailgunListManager
     end
 
     def delete
-      Mailgun().lists.delete list_member_params["list_address"]
+      List.find_by_address(params["address"]).delete
       @lists = List.all
     end
 
     def update
-      p params
-      Mailgun().lists.update params[:old_list_address], list_params["address"], list_params
-      @list = List.find_by_address list_params["address"]
+      list = List.find_by_address(params["address"])
+      @list = list.update(list_params)
       @i = params["dom_id"]
     end
 
     def add_member
-      @list_address = list_member_params["list_address"]
       @dom_id = list_member_params["dom_id"]
-      Mailgun().list_members(@list_address).add list_member_params["member_address"]
+      Member.add(list_member_params["list_address"], list_member_params["member_address"])
+      @list = List.find_by_address(list_member_params["list_address"])
     end
 
     def delete_member
-      @list_address = list_member_params["list_address"]
       @dom_id = list_member_params["dom_id"]
-      Mailgun().list_members(@list_address).remove list_member_params["member_address"]
+      Member.delete_by_addresses(list_member_params["list_address"], list_member_params["member_address"])
+      @list = List.find_by_address(list_member_params["list_address"])
     end
 
     def destroy

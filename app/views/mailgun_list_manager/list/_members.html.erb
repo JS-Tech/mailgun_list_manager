@@ -3,14 +3,14 @@
     <th>Adresse</th> <th>Name</th> <th>Subscribed</th> <th>vars</th> <th class="no-print">Actions</th>
   </thead>
   <tbody>
-    <% members.each do |member| %>
+    <% @list.members.each do |member| %>
       <tr>
-        <td><%= member["address"] %></td>
-        <td class="name"><%= member["name"] %></td>
-        <td class="subscribed"><%= member["subscribed"] %></td>
-        <td class="vars"><%= member["vars"] %></td>
+        <td><%= member.address %></td>
+        <td class="name"><%= member.name %></td>
+        <td class="subscribed"><%= member.subscribed %></td>
+        <td class="vars"><%= member.vars %></td>
         <td class="no-print">
-          <%= button_to "X", { action: "delete_member", list_address: list_address, member_address: member["address"], dom_id: dom_id }, method: :delete, data: { confirm: "Are you sure?" }, remote: true %>
+          <%= button_to "X", { action: "delete_member", list_address: @list.address, member_address: member.address, dom_id: dom_id }, method: :delete, data: { confirm: "Are you sure?" }, remote: true %>
         </td>
       </tr>
     <% end %>

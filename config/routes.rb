@@ -7,7 +7,7 @@ MailgunListManager::Engine.routes.draw do
   post "list/members/", to: "list#add_member"
 
   post   "list", to: "list#add"
-  put    "list/:old_list_address", to: "list#update", constraints: { old_list_address: /[\w+\-.]+@[a-z\d\-.]+\.[a-z]+/i }
-  delete "list/:list_address",     to: "list#delete", constraints: {     list_address: /[\w+\-.]+@[a-z\d\-.]+\.[a-z]+/i }
+  put    "list/:address", to: "list#update", constraints: { address: /[\w+\-.]+@[a-z\d\-.]+\.[a-z]+/i }
+  delete "list/:address", to: "list#delete", constraints: { address: /[\w+\-.]+@[a-z\d\-.]+\.[a-z]+/i }
 
 end
