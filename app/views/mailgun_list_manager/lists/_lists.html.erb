@@ -1,0 +1,6 @@
+<div class="lists">
+  <% @lists.each do |list| %>
+    <% @list = list %>
+    <%= content_tag :div, (render 'list'), id: "list-#{@list.id}" %>
+  <% end %>
+</div>

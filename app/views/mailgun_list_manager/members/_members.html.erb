@@ -1,0 +1,19 @@
+<table>
+  <thead>
+    <th>Adresse</th> <th>Name</th> <th>Subscribed</th> <th>vars</th> <th class="no-print">Actions</th>
+  </thead>
+  <tbody>
+    <% @list.members.each do |member| %>
+      <tr>
+        <td> <%= member.address %>    </td>
+        <td> <%= member.name %>       </td>
+        <td> <%= member.subscribed %> </td>
+        <td> <%= member.vars %>       </td>
+        <td class="no-print">
+          <%= link_to "delete", list_member_path(member.list.id, member.id),
+                method: :delete, remote: true, data: {confirm: "Vraiment?"} %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

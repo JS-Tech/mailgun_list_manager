@@ -25,6 +25,6 @@ module Dummy
 end
 
 MailgunListManager.configure do |config|
-  config.apikey = "key-4d89c843537d5769b4ffebbc4bad4593"
-  config.domain = "sandboxe3bbf884e0fb4f1aa43673eb8bd06c34.mailgun.org"
+  config.apikey = Rails.application.secrets.mailgun_api_key
+  config.domain = Rails.application.secrets.mailgun_domain
 end

@@ -1,19 +1,21 @@
 <div class="list">
   <div class="title">
-    <span class="name"><%= @list.name %></span>
-    <span class="address"><%= @list.address %> (<%= @list.members_count %>)</span>
+    <span class="name">    <%= @list.name %> </span>
+    <span class="address"> <%= @list.address %> (<%= @list.members_count %>)</span>
   </div>
 
   <div class="container">
     <div class="form no-print">
-      <%= button_to "Supprimer la liste", { action: "delete", address: @list.address }, method: :delete, data: { confirm: "Are you sure?" }, remote: true, form_class: "delete" %>
+
+      <%= link_to "Supprimer la liste", list_path(@list.id),
+            method: :delete, remote: true, data: {confirm: "Vraiment?"} %>
 
       <button onclick="$(this).next('.update-modal').show()">Mettre à jour les infos</button>
       <div class="update-modal">
         <div class="content">
           <div class="close">X (fermer)</div>
           <div class="title">Changer les infos</div>
-          <%= form_for @list, url: "list/#{@list.address}", remote: true, method: :put do |f| %>
+          <%= form_for @list, url: list_path(@list.id), remote: true, method: :put do |f| %>
             <%= f.label :address %>
             <%= f.email_field :address, required: true %>
             <%= f.label :name %>
@@ -21,16 +23,15 @@
             <%= f.label :description %>
             <%= f.text_field :description %>
             <%= f.label :access_level %>
-            <%= f.select(:access_level, List::ACCESS_LEVELS) %>
-            <%= hidden_field_tag("old_address", @list.address) %>
-            <%= hidden_field_tag("dom_id", @i) %>
+            <%= f.select(:access_level, MailgunListManager::List::ACCESS_LEVELS) %>
             <%= f.submit "Mettre à jour" %>
           <% end %>
         </div>
       </div>
-      <button onclick="printElement('#list-<%= @i %>')">Imprimer la liste</button>
 
-      <%= form_tag("list/members", remote: true, class: "add") do %>
+      <button onclick="printElement('[id=\'list-<%= @list.id %>\']')">Imprimer la liste</button>
+
+      <%= form_tag(list_members_path(@list.id), remote: true, class: "add") do %>
         <label>Ajouter un membre: </label>
         <input type="email" required name="member_address" placeholder="email">
         <input type="hidden" name="list_address" value="<%= @list.address %>">
@@ -38,7 +39,10 @@
         <input type="submit" value="Ajouter">
       <% end %>
     </div>
-      <%= content_tag :div, (render 'members', dom_id: "members-#{@i}"), id: "members-#{@i}" %>
-  </div>
 
+    <div id="members-<%= @list.id %>">
+      <%= render 'mailgun_list_manager/members/members' %>
+    </div>
+
+  </div>
 </div>

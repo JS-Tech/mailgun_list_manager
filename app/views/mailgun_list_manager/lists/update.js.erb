@@ -1,0 +1,7 @@
+var domlist = $("[id='list-<%= @old_id %>']");
+
+domlist.attr('id', 'list-<%= @list.id %>');
+
+domlist.html("<%= j (render 'list') %>");
+
+domlist.find(".container").show();
