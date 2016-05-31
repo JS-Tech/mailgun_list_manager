@@ -11,10 +11,11 @@ module MailgunListManager
 
     validates :address, presence: true
     validates_format_of :address, :with => /@/
-    validates :subscribed, inclusion: { in: [true, false], messages: "must be true or false" }
+    validates :subscribed, inclusion: { in: [true, false], messages: "must be true or false" }, allow_blank: true
 
     def initialize(attributes = {}, list)
       super(attributes)
+      raise errors.messages.to_s if self.invalid?
       @list = list
     end
 
@@ -37,13 +38,8 @@ module MailgunListManager
 
     private
 
-    def self.parse_json(json, list)
-      p json
-      a = Array.new
-      json.each do |member|
-        a << Member.new(member, list)
-      end
-      a
+    def self.parse(hash, list)
+      hash.map { |member| Member.new(member, list)  }
     end
 
   end

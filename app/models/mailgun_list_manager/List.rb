@@ -14,8 +14,8 @@ module MailgunListManager
 
     validates :address, presence: true
     validates_format_of :address, :with => /@/
-    validates :access_level, inclusion: { in: ACCESS_LEVELS, messages: "unknown access level type" }
-    validates :members_count, :numericality => { :greater_than_or_equal_to => 0 }
+    validates :access_level,  inclusion: { in: ACCESS_LEVELS, messages: "unknown access level type" }
+    validates :members_count, :numericality => { :greater_than_or_equal_to => 0 }, allow_blank: true
 
     def id
       Base64.urlsafe_encode64(address)
@@ -23,24 +23,27 @@ module MailgunListManager
 
     def members
       json = Mailgun().list_members(address).list
-      Member.parse_json(json, self)
+      Member.parse(json, self)
     end
 
     # CRUD operations
 
     def self.all
       json = Mailgun().lists.list
-      @lists = parse_json(json)
+      @lists = parse(json)
     end
 
     def self.add(address, params)
+      p '######'
+      p params
+      List.new(params)
       Mailgun().lists.create(address, params)
     end
 
     def self.find(id)
       address = Base64.urlsafe_decode64(id)
-      json = Mailgun().lists.find(address)["list"]
-      List.new(json)
+      hash = Mailgun().lists.find(address)["list"]
+      List.new(hash)
     end
 
     def self.destroy(id)
@@ -49,18 +52,19 @@ module MailgunListManager
     end
 
     def update(list_params)
-      json = Mailgun().lists.update(address, list_params["address"], list_params)
-      List.new(json["list"])
+      hash = Mailgun().lists.update(address, list_params["address"], list_params)["list"]
+      List.new(hash)
+    end
+
+    def initialize(params = {})
+      super(params)
+      raise self.errors.messages.to_s if self.invalid?
     end
 
     private
 
-    def self.parse_json(json)
-      a = Array.new
-      json.each do |list|
-        a << List.new(list)
-      end
-      a
+    def self.parse(hash)
+      hash.map { |list| List.new(list) }
     end
 
   end

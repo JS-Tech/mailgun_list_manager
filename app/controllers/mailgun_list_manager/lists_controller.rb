@@ -5,7 +5,6 @@ module MailgunListManager
 
     def index
       @lists = List.all
-      p @lists.first.members
     end
 
     def create
