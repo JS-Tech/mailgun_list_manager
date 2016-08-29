@@ -4,7 +4,22 @@ A web interface to interact with mailgun's mailling lists.
 
 ## Installation
 
-*coming soon*
+`gem 'mailgun_list_manager', '~> 0.0.1'`
+
+Add to your config file the following:
+
+```
+MailgunListManager.configure do |config|
+  # Mailgun API key
+  config.apikey = Rails.application.secrets.mailgun_api_key
+  # Mailgun domain
+  config.domain = Rails.application.secrets.mailgun_domain
+end
+```
+
+Navigate to **/mailgun_list_manager** and enjoy editing your mailing lists.
+**Important** do not forget to secure the entry point since anyone accessing the
+page will be able to freely edit, remove or add groups.
 
 ## Features
 

@@ -9,12 +9,12 @@ Gem::Specification.new do |s|
   s.version     = MailgunListManager::VERSION
   s.authors     = ["Noémien Kocher"]
   s.email       = ["nkcr.je@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of MailgunListManager."
-  s.description = "TODO: Description of MailgunListManager."
+  s.homepage    = "https://github.com/JS-Tech/mailgun_list_manager"
+  s.summary     = "Interface to manager mailing list from Mailgun."
+  s.description = "This rails plugin provides a simple page giving the ability to add, edit and remove Mailgun mailing lists."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4.2.6"
