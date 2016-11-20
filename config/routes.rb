@@ -6,4 +6,6 @@ MailgunListManager::Engine.routes.draw do
     resources :members
   end
 
+  mount Adeia::Engine => "/adeia"
+
 end
