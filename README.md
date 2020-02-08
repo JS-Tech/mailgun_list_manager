@@ -1,3 +1,5 @@
+**This gem is discontinued**
+
 # Mailgun list manager
 
 A web interface to interact with mailgun's mailling lists.
