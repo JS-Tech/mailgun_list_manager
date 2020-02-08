@@ -1,4 +1,4 @@
-**This gem is discontinued**
+**This gem is discontinued and no longer maintained**
 
 # Mailgun list manager
 
